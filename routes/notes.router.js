@@ -8,7 +8,7 @@ router
 
   .get(async (req, res) => {
     try {
-      const data = await Notes.find({});
+      const data = await Notes.find().sort({_id:-1});
       res.json({ success: true, data });
     } catch (err) {
       res
