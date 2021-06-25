@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { Notes } = require("../models/notes.model");
-const { check, validationResult } = require("express-validator")
+// const { check, validationResult } = require("express-validator")
+const _ = require("lodash");
 
 router
   .route("/")
@@ -38,5 +39,18 @@ router
         });
     }
   });
+
+  router
+  .route("/change-color")
+  .post(async(req,res)=>{
+    try{
+      const {id,bgColor} = req.body
+      const note = await Notes.findOne({_id:id});
+      const noteData =_.extend(note, {bgColor:bgColor});
+      await noteData.save();
+    }catch(err){
+      res.status(500).json({success:false,message:"unable to change the color",errorMessage:err.message})
+    }
+  })
 
 module.exports = router;
