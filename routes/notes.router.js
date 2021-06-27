@@ -28,7 +28,7 @@ router
       const note = req.body;
       const NewNote = new Notes(note);
       const savedNote = await NewNote.save();
-      res.json({ success: true, note: savedNote });
+      res.json({ success: true, message:"Note Added Successfully", note: savedNote });
     } catch (err) {
       res
         .status(500)
@@ -56,7 +56,7 @@ router
         });
     }
   })
-
+ 
   router
   .route("/change-color")
   .post(async(req,res)=>{
@@ -65,6 +65,7 @@ router
       const note = await Notes.findOne({_id:id});
       const noteData =_.extend(note, {bgColor:bgColor});
       await noteData.save();
+      res.json({ success: true, message:"Updated the note color", note:noteData });
     }catch(err){
       res.status(500).json({success:false,message:"unable to change the color",errorMessage:err.message})
     }
@@ -77,6 +78,7 @@ router
       const note = await Notes.findOne({_id:id});
       const noteData =_.extend(note, {isArchive:!note.isArchive,isDelete:false});
       await noteData.save();
+      res.json({ success: true, message:"Note Archived", note:noteData });
     }catch(err){
       res.status(500).json({success:false,message:"unable to Archive the note",errorMessage:err.message})
     }
@@ -90,8 +92,23 @@ router
       const note = await Notes.findOne({_id:id});
       const noteData =_.extend(note, {isDelete:!note.isDelete,isArchive:false});
       await noteData.save();
+      res.json({ success: true, message:"Note Trashed", note:noteData });
     }catch(err){
       res.status(500).json({success:false,message:"unable to Trash the note",errorMessage:err.message})
+    }
+  })
+
+  router
+  .route("/update")
+  .post(async(req,res)=>{
+    try{
+      const{id,updatedTitle,updatedNote} = req.body
+      const note = await Notes.findOne({_id:id})
+      const noteData = _.extend(note,{title:updatedTitle,note:updatedNote})
+      await noteData.save()
+      res.json({ success: true, message:"Note Updated", note:noteData });
+    }catch(err){
+      res.status(500).json({success:false,message:"Unable to update the note",errorMessage:err.message})
     }
   })
 
