@@ -102,13 +102,27 @@ router
   .route("/update")
   .post(async(req,res)=>{
     try{
-      const{id,updatedTitle,updatedNote} = req.body
+      const{id,updatedTitle,updatedNote,updatedTag} = req.body
       const note = await Notes.findOne({_id:id})
-      const noteData = _.extend(note,{title:updatedTitle,note:updatedNote})
+      const noteData = _.extend(note,{title:updatedTitle,note:updatedNote,tag:updatedTag})
       await noteData.save()
       res.json({ success: true, message:"Note Updated", note:noteData });
     }catch(err){
       res.status(500).json({success:false,message:"Unable to update the note",errorMessage:err.message})
+    }
+  })
+
+  router
+  .route("/pinned/:id")
+  .post(async(req,res)=>{
+    try{
+      const {id} = req.params
+      const note = await Notes.findOne({_id:id})
+      const noteData = _.extend(note,{isPinned:!note.isPinned})
+      await noteData.save()
+      res.json({ success: true, message:"Note Pinned", note:noteData });
+    }catch(err){
+      res.status(500).json({success:false,message:"Unable to pin the note",errorMessage:err.message})
     }
   })
 
