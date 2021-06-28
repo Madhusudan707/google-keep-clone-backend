@@ -9,8 +9,10 @@ app.use(cors());
 initializeDBConnection();
 app.use(express.json({ extended: false }))
 const notes = require("./routes/notes.router");
+const users = require("./routes/user.router");
 
 app.use("/notes", notes);
+app.use("/users",users)
 
 app.get("/", (request, response) => {
   response.sendFile(__dirname + "/welcome.html");
