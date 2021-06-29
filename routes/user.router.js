@@ -28,7 +28,7 @@ router.route("/:uid").get(async (req, res) => {
   try {
     const uid = req.params.uid;
     const data = await User.findOne({ uid: uid })
-    res.json({ success: true, data });
+    res.json({ success: true, user:data });
   } catch (err) {
     res.status(500).json({
       success: false,
