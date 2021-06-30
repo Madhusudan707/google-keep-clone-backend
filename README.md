@@ -24,10 +24,10 @@
 2. nodemon ./indexjs
 
 ### FrontEnd PR Link
-https://github.com/Madhusudan707/startup-tube/pull/1
+https://github.com/Madhusudan707/nano-notes/pull/1
 
 ### Backend PR Link
-https://github.com/Madhusudan707/startup-tube-backend/pull/1
+https://github.com/Madhusudan707/nano-notes-backend/pull/1
 ### Preview
 ![Live Gif](preview.gif)
 
